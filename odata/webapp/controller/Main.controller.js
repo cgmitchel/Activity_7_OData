@@ -4,7 +4,8 @@ sap.ui.define([
     "use strict";
 
     return Controller.extend("sapips.training.odata.controller.Main", {
-        onInit() {
+        formatPrice: function (price) {
+            return "₱" + Number(price).toFixed(2);
         }
     });
 });
