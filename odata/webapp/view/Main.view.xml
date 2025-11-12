@@ -1,36 +1,61 @@
-<mvc:View controllerName="sapips.training.odata.controller.Main"
+<mvc:View
+    controllerName="sapips.training.odata.controller.Main"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">
+
     <Page id="pageMain" title="{i18n>title}">
         <content>
-            <Table id="productTable" items="{/Products}">
+            <Table
+                id="productsTable"
+                inset="false"
+                items="{
+                    path: '/Products',
+                    sorter: { path: 'ProductName', ascending: true },
+                    filters: [
+                        { path: 'Discontinued', operator: 'EQ', value1: false }
+                    ]
+                }">
+
                 <headerToolbar>
-                    <Toolbar id="toolbarMain">
-                        <Title id="titleProducts" text="{i18n>products}" />
+                    <Toolbar id="productsToolbar">
+                        <Title
+                            id="productListTitle"
+                            text="{i18n>productListTitle}"
+                            level="H2" />
                     </Toolbar>
                 </headerToolbar>
 
                 <columns>
                     <Column id="colProduct">
-                        <Text id="txtProduct" text="{i18n>product}" />
+                        <Text id="txtProductCol" text="{i18n>productColumn}" />
                     </Column>
                     <Column id="colSupplier">
-                        <Text id="txtSupplier" text="{i18n>supplierID}" />
+                        <Text id="txtSupplierCol" text="{i18n>supplierColumn}" />
                     </Column>
                     <Column id="colPrice">
-                        <Text id="txtPrice" text="{i18n>price}" />
+                        <Text id="txtPriceCol" text="{i18n>priceColumn}" />
                     </Column>
                 </columns>
 
                 <items>
-                    <ColumnListItem id="cliProducts">
-                        <cells>
-                            <ObjectIdentifier id="oiProduct" title="{ProductName}" text="Product ID: {ProductID}" />
-                            <Text id="txtSupplierCell" text="{SupplierID}" />
-                            <ObjectIdentifier id="oiPrice" title="{UnitPrice}" text="{QuantityPerUnit}" />
-                        </cells>
+                    <ColumnListItem id="productRow">
+                        <!-- Product Column -->
+                        <ObjectIdentifier
+                            id="objProduct"
+                            title="{ProductName}"
+                            text="ID: {ProductID}" />
+
+                        <!-- Supplier Column -->
+                        <Text id="txtSupplierID" text="{SupplierID}" />
+
+                        <!-- Price Column -->
+                        <ObjectIdentifier
+                            id="objPrice"
+                            title="{parts: [{path:'UnitPrice'}], formatter: '.formatPrice'}"
+                            text="{QuantityPerUnit}" />
                     </ColumnListItem>
                 </items>
+
             </Table>
         </content>
     </Page>
